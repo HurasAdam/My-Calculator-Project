@@ -19,6 +19,9 @@ let result =''
 
 function displayNumbers(){
 
+    if(this.textContent==='.' && currentNumber.innerHTML===''){
+    return currentNumber.innerHTML= '0.';
+}
 currentNumber.innerHTML= currentNumber.innerHTML+ this.textContent;
 }
 
