@@ -104,9 +104,6 @@ button:hover {
     
    display: none;
 }
-#clrHistory:hover{
-    background: rgb(120, 47, 47);
-}
 
 .history-item {
     margin: 8px 0px;
@@ -116,6 +113,7 @@ button:hover {
 }
 
 .hidden{
+    cursor:pointer;
     width: 110px;
     background-color: rgb(95, 144, 100);
     border-radius: 20px;
