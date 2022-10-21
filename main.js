@@ -1,4 +1,5 @@
 
+
 const currentNumber = document.querySelector('.currentNumber');
 
 const previousNumber = document.querySelector('.previousNumber p');
@@ -10,65 +11,52 @@ const numbersButtons = document.querySelectorAll('.number');
 const operatorsButtons = document.querySelectorAll('.operator');
 
 const equalsButton = document.querySelector('.equals');
-
-const clearButton = document.querySelector('.clear');
-
-const calculatorHistory = document.querySelector('.history');
-
-const historyBtn = document.querySelector('.history-btn');
+const clearButton= document.querySelector('.clear');
+const calculatorHistory= document.querySelector('.history');
+const clearHistoryButton= document.querySelector('#clrHistoryButton');
+let result =''
 
 
-let result = '';
+function displayNumbers(){
 
-
-
-
-
-
-function displayNumbers () {
-        if(this.textContent === '.' && currentNumber.innerHTML.includes('.')) return;
-        if(this.textContent === '.' && currentNumber.innerHTML === '') return currentNumber.innerHTML = '.0'
-
-        currentNumber.innerHTML += this.textContent;
+currentNumber.innerHTML= currentNumber.innerHTML+ this.textContent;
 }
 
 
 
 
-function operate () {
-    if(currentNumber.innerHTML === '' && this.textContent ==='-'){
-        currentNumber.innerHTML = '-';
+function operate(){
+
+    if(currentNumber.innerHTML==='' && previousNumber.innerHTML==='' && this.textContent===('-') ){
+currentNumber.innerHTML= '-';
+return
+    }
+    else if(currentNumber.innerHTML===''){
         return;
     }
-    
+    if(mathSign.innerHTML!==''){
+        showResult()
+    }
+    if(currentNumber.innerHTML==='' & mathSign.innerHTML.includes('-')){
+        return
+    }
 
-     else if (currentNumber.innerHTML === '') {
-        return;
-     }
+    previousNumber.innerHTML= currentNumber.innerHTML;
+mathSign.innerHTML = this.textContent;
+currentNumber.innerHTML= ''
 
-     if(mathSign.innerHTML !== '') {
-         showResult();
-     }
-     previousNumber.innerHTML = currentNumber.innerHTML;
-     mathSign.innerHTML = this.textContent;
-     currentNumber.innerHTML ='';
 }
 
 
-
-
-
-function showResult () {
+function showResult(){
     if(previousNumber.innerHTML === '' || currentNumber.innerHTML === '') return;
-
-    let a = Number(currentNumber.innerHTML);
-    let b = Number(previousNumber.innerHTML);
-    let operator = mathSign.innerHTML;
-
+    const a = parseFloat(currentNumber.innerHTML);
+    const b = parseFloat(previousNumber.innerHTML);
+    const operator = mathSign.innerHTML
 
     switch(operator) {
         case '+':
-        result = a + b;
+        result=a+b;
         break;
         case '-':
         result = b - a;
@@ -85,50 +73,54 @@ function showResult () {
     }
 
     addToHistory();
-    historyBtn.classList.add('active');
-    currentNumber.innerHTML = result;
-    previousNumber.innerHTML = '';
-    mathSign.innerHTML = '';
+    
+    currentNumber.innerHTML= result;
+    previousNumber.innerHTML=''
+    mathSign.innerHTML='';
+
+return;
+
 
 }
 
-function addToHistory () {
-    const newHistoryItem = document.createElement('li');
-    newHistoryItem.innerHTML = `${currentNumber.innerHTML} ${mathSign.innerHTML} ${previousNumber.innerHTML} = ${result}`
-    newHistoryItem.classList.add('history-item');
+function addToHistory(){
+ 
+ clearHistoryButton.id='';
+    newHistoryItem= document.createElement('li');
+    newHistoryItem.innerHTML= `${previousNumber.innerHTML} ${mathSign.innerHTML} ${currentNumber.innerHTML} = ${result}`
     calculatorHistory.appendChild(newHistoryItem);
 }
 
-
-function clearHistory () {
-    calculatorHistory.textContent = '';
-    if(calculatorHistory.textContent === '') {
-        historyBtn.classList.remove('active');
-    }
-}
-
-
-function clearScreen () {
-    result = '';
-    currentNumber.innerHTML = '';
-    previousNumber.innerHTML = '';
-    mathSign.innerHTML = '';
+function clear(){
+    currentNumber.innerHTML='';
+    previousNumber.innerHTML='';
+    mathSign.innerHTML='';
 
 }
 
+function clearHistory(){
+    calculatorHistory.innerHTML=''
+    clearHistoryButton.id = 'clrHistoryButton'
+    
 
- // Nasluchiwanie przyciskow
-
- operatorsButtons.forEach((button) => button.addEventListener('click', operate))
-
- equalsButton.addEventListener('click', showResult);
-
-
- clearButton.addEventListener('click', clearScreen);
-
- numbersButtons.forEach((button) => {
-     button.addEventListener('click', displayNumbers)
- })
+}
 
 
- historyBtn.addEventListener('click', clearHistory);
+
+
+
+// nasluchwanie na buttony //
+numbersButtons.forEach((button)=>{
+    button.addEventListener('click',displayNumbers);
+})
+
+
+operatorsButtons.forEach((button)=>{
+    button.addEventListener('click',operate);
+})
+
+equalsButton.addEventListener('click',showResult);
+
+clearButton.addEventListener('click',clear);
+
+clearHistoryButton.addEventListener('click',clearHistory);
