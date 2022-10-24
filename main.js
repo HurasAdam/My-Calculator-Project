@@ -35,9 +35,6 @@ function operate() {
     if (mathSign.innerHTML !== '') {
         showResult()
     }
-    if (currentNumber.innerHTML === '' & mathSign.innerHTML.includes('-')) {
-        return
-    }
 
     previousNumber.innerHTML = currentNumber.innerHTML;
     mathSign.innerHTML = this.textContent;
@@ -75,10 +72,6 @@ function showResult() {
     currentNumber.innerHTML = result;
     previousNumber.innerHTML = ''
     mathSign.innerHTML = '';
-
-    return;
-
-
 }
 
 function addToHistory() {
