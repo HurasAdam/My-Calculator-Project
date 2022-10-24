@@ -15,12 +15,12 @@ const clearHistoryButton = document.querySelector('#clrHistoryButton');
 let result = ''
 
 
-function displayNumbers() {
-
+function displayNumber() {
     if (this.textContent === '.' && currentNumber.innerHTML === '') {
-        return currentNumber.innerHTML = '0.';
+        currentNumber.innerHTML = '0.';
+    } else {
+        currentNumber.innerHTML = currentNumber.innerHTML + this.textContent;
     }
-    currentNumber.innerHTML = currentNumber.innerHTML + this.textContent;
 }
 
 
@@ -103,7 +103,7 @@ function clearHistory() {
 
 // nasluchwanie na buttony //
 numbersButtons.forEach((button) => {
-    button.addEventListener('click', displayNumbers);
+    button.addEventListener('click', displayNumber);
 })
 
 
