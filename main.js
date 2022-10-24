@@ -25,8 +25,8 @@ function displayNumber() {
 
 
 function operate() {
-
-    if (currentNumber.innerHTML === '' && previousNumber.innerHTML === '' && this.textContent === ('-')) {
+    const unaryMinus = currentNumber.innerHTML === '' && previousNumber.innerHTML === '' && this.textContent === ('-')
+    if (unaryMinus) {
         currentNumber.innerHTML = '-';
         return
     } else if (currentNumber.innerHTML === '') {
