@@ -1,5 +1,3 @@
-
-
 const currentNumber = document.querySelector('.currentNumber');
 
 const previousNumber = document.querySelector('.previousNumber p');
@@ -11,119 +9,103 @@ const numbersButtons = document.querySelectorAll('.number');
 const operatorsButtons = document.querySelectorAll('.operator');
 
 const equalsButton = document.querySelector('.equals');
-const clearButton= document.querySelector('.clear');
-const calculatorHistory= document.querySelector('.history');
-const clearHistoryButton= document.querySelector('#clrHistoryButton');
-let result =''
+const clearButton = document.querySelector('.clear');
+const calculatorHistory = document.querySelector('.history');
+const clearHistoryButton = document.querySelector('#clrHistoryButton');
+let result = ''
 
 
-function displayNumbers(){
-
-    if(this.textContent==='.' && currentNumber.innerHTML===''){
-    return currentNumber.innerHTML= '0.';
-}
-currentNumber.innerHTML= currentNumber.innerHTML+ this.textContent;
-}
-
-
-
-
-function operate(){
-
-    if(currentNumber.innerHTML==='' && previousNumber.innerHTML==='' && this.textContent===('-') ){
-currentNumber.innerHTML= '-';
-return
+function displayNumber() {
+    if (this.textContent === '.' && currentNumber.innerHTML === '') {
+        currentNumber.innerHTML = '0.';
+    } else {
+        currentNumber.innerHTML = currentNumber.innerHTML + this.textContent;
     }
-    else if(currentNumber.innerHTML===''){
+}
+
+
+function operate() {
+    const unaryMinus = currentNumber.innerHTML === '' && previousNumber.innerHTML === '' && this.textContent === ('-')
+    if (unaryMinus) {
+        currentNumber.innerHTML = '-';
+        return
+    } else if (currentNumber.innerHTML === '') {
         return;
     }
-    if(mathSign.innerHTML!==''){
+    if (mathSign.innerHTML !== '') {
         showResult()
     }
-    if(currentNumber.innerHTML==='' & mathSign.innerHTML.includes('-')){
-        return
-    }
 
-    previousNumber.innerHTML= currentNumber.innerHTML;
-mathSign.innerHTML = this.textContent;
-currentNumber.innerHTML= ''
+    previousNumber.innerHTML = currentNumber.innerHTML;
+    mathSign.innerHTML = this.textContent;
+    currentNumber.innerHTML = ''
 
 }
 
 
-function showResult(){
-    if(previousNumber.innerHTML === '' || currentNumber.innerHTML === '') return;
+function showResult() {
+    if (previousNumber.innerHTML === '' || currentNumber.innerHTML === '') return;
     const a = parseFloat(currentNumber.innerHTML);
     const b = parseFloat(previousNumber.innerHTML);
     const operator = mathSign.innerHTML
 
-    switch(operator) {
+    switch (operator) {
         case '+':
-        result=a+b;
-        break;
+            result = a + b;
+            break;
         case '-':
-        result = b - a;
-        break;
+            result = b - a;
+            break;
         case 'x':
-        result = a * b;
-        break;
+            result = a * b;
+            break;
         case '/':
-        result = b / a;
-        break;
+            result = b / a;
+            break;
         case '2^':
-        result = b ** a;
-        break;
+            result = b ** a;
+            break;
     }
 
     addToHistory();
-    
-    currentNumber.innerHTML= result;
-    previousNumber.innerHTML=''
-    mathSign.innerHTML='';
 
-return;
-
-
+    currentNumber.innerHTML = result;
+    previousNumber.innerHTML = ''
+    mathSign.innerHTML = '';
 }
 
-function addToHistory(){
- 
- clearHistoryButton.id='';
-    newHistoryItem= document.createElement('li');
-    newHistoryItem.innerHTML= `${previousNumber.innerHTML} ${mathSign.innerHTML} ${currentNumber.innerHTML} = ${result}`
+function addToHistory() {
+
+    clearHistoryButton.id = '';
+    newHistoryItem = document.createElement('li');
+    newHistoryItem.innerHTML = `${previousNumber.innerHTML} ${mathSign.innerHTML} ${currentNumber.innerHTML} = ${result}`
     calculatorHistory.appendChild(newHistoryItem);
 }
 
-function clear(){
-    currentNumber.innerHTML='';
-    previousNumber.innerHTML='';
-    mathSign.innerHTML='';
-
+function clear() {
+    currentNumber.innerHTML = '';
+    previousNumber.innerHTML = '';
+    mathSign.innerHTML = '';
 }
 
-function clearHistory(){
-    calculatorHistory.innerHTML=''
+function clearHistory() {
+    calculatorHistory.innerHTML = ''
     clearHistoryButton.id = 'clrHistoryButton'
-    
-
 }
-
-
-
 
 
 // nasluchwanie na buttony //
-numbersButtons.forEach((button)=>{
-    button.addEventListener('click',displayNumbers);
+numbersButtons.forEach((button) => {
+    button.addEventListener('click', displayNumber);
 })
 
 
-operatorsButtons.forEach((button)=>{
-    button.addEventListener('click',operate);
+operatorsButtons.forEach((button) => {
+    button.addEventListener('click', operate);
 })
 
-equalsButton.addEventListener('click',showResult);
+equalsButton.addEventListener('click', showResult);
 
-clearButton.addEventListener('click',clear);
+clearButton.addEventListener('click', clear);
 
-clearHistoryButton.addEventListener('click',clearHistory);
+clearHistoryButton.addEventListener('click', clearHistory);
